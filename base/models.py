@@ -8,7 +8,7 @@ class Category(models.Model):
         return self.name
     
 class Product(models.Model):
-    name = models.CharField(max_length=200,blank=False)
+    name = models.CharField(max_length=150,blank=False)
     description = models.TextField(null=True,blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     #quantity
