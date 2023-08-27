@@ -1,0 +1,50 @@
+{% load static %}
+<style>
+    .no-bullets {
+    list-style: none;
+  }
+  .no-bullets h3{
+    font-size: 15px;
+  }
+</style>
+<h3>Filters</h3>
+<hr>
+{% for cat in category %}
+<ul class="no-bullets">
+        {% if cat.product_set.all.count > 0 %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="{% url 'base:search-product'%}?q={{cat.name}}"><h5>{{cat.name}}</h5></a>
+            </a>
+            <ul class="no-bullets dropdown-menu">
+                {% for product in cat.product_set.all %}
+                    
+                        <li>
+                            <div>
+                            <a class="dropdown-item" href="{% url 'base:search-product'%}?q={{product.name}}" title="{{product.name}}">
+                            <h3>{{product}}</h3>
+                            </a>
+                            </div>
+                        </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
+        </ul>
+{% endfor %}
+
+
+        <!--
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu">
+              <li><a >Electronics</a></li>
+              <li><a class="dropdown-item" href="#">Fashion</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Mobile</a></li>
+              <li><a class="dropdown-item" href="#">Appliances</a></li>
+            </ul>
+          </li>
+        -->

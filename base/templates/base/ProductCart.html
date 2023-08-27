@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    .cart-class{
+        display:grid;
+        grid-template-columns: 3fr 2fr;
+    }
+    .filter_product{
+        display:grid;
+        grid-template-columns: 1fr 2fr;
+        vertical-align: top;
+        text-align: center;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc
+    }
+    .main_filter_container{
+        display:grid;
+        grid-template-columns: 1fr 4fr;
+    }
+    .filter_product img{
+        width: 200px;
+        height: 200px;
+        margin-bottom: 10px;
+    }
+</style>
+<p><center><b>Total Cart item : {{cartItem.count}}</b></center></p>
+<div class="cart-class">
+    <div>
+    {% for cart in cartItem %}
+    <div>
+        <a href="{% url 'base:product' cart.product.id %}" title="{{cart.product.name}}">
+            <div class="filter_product">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg" alt="{{cart.product.name}} image"/>
+                </div>
+                <div>
+                    
+                    <p>{{cart.product.name}} </p>
+                    <span>{{cart.product.price}}</span>
+                    <p><small>{{cart.product.category}}</small></p>
+                </div>
+            </div>
+            </a>
+    </div>
+    {% endfor %}
+</div>
+<div>
+    <h4>Total Amount</h4>
+    <hr>
+    <p><b>Payable Amount :</b> ${{sum_of_cart_amount}} </p>
+</div>
+</div>
+
+{% endblock %}
+

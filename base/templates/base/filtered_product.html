@@ -1,0 +1,103 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    .filter_product{
+        display:grid;
+        grid-template-columns: 1fr 2fr;
+        vertical-align: top;
+        text-align: center;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc
+    }
+    .main_filter_container{
+        display:grid;
+        grid-template-columns: 1fr 4fr;
+    }
+    .filter_product img{
+        width: 200px;
+        height: 200px;
+        margin-bottom: 10px;
+    }
+    .page_button{
+        
+        font: bold 15px Arial;
+        text-decoration: none;
+        background-color: #EEEEEE;
+        color: #333333;
+        padding: 2px 6px 2px 6px;
+        border-top: 1px solid #CCCCCC;
+        border-right: 1px solid #333333;
+        border-bottom: 1px solid #333333;
+        border-left: 1px solid #CCCCCC;
+    }
+</style>
+<div class="main_filter_container">
+    <div>
+        {% include 'base/filters.html' %}
+    </div>
+    <div>
+        <h3>{{filter_products.count }} Products Available </h3>
+        <hr>
+        {%for product in page %}
+        <a href="{% url 'base:product' product.id %}" title="{{product.name}}">
+        <div class="filter_product">
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg" alt="{{product.name}} image"/>
+            </div>
+            <div>
+                
+                <p>{{product.name}} </p>
+                <span>{{product.price}}</span>
+                <p><small>{{product.category}}</small></p>
+            </div>
+        </div>
+        </a>
+        <hr>
+        {% endfor %}
+        <div class="pagination">
+            <span class="step-links">
+                <span class="current-page">{{ page.number }}</span>
+                {% if page.has_previous %}
+                    <a class="page_button" href="?q={{search_param}}&page=1">&laquo; first</a>
+                    <a class="page_button" href="?q={{search_param}}&page={{ page.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                
+        
+                {% if page.has_next %}
+                    <a class="page_button" href="?q={{search_param}}&page={{ page.next_page_number }}">next</a>
+                    <a class="page_button" href="?q={{search_param}}&page={{ page.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div> 
+
+{% endblock %}
+
+
+
+<!--
+     <div>
+        <h3>{{filter_product_count}} Products Available</h3>
+        <hr>
+        <section class="products">
+        {%for product in filter_products %}
+       
+            <ul class="no-bullets">
+                <li>
+                    <div class="product-item">
+                    <a href="{% url 'product' product.id %}" title="{{product.name}}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg" alt="Product 1">
+                    <h3>{{product}}</h3>
+                    <p>${{product.price}}</p>
+                    </a>
+                    <a href="#" class="btn">Add to Cart</a>
+                    </div>
+                </li>
+            </ul>
+        {% endfor %}
+    </section>
+    </div>
+-->

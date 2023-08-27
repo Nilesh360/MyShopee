@@ -1,0 +1,174 @@
+<style>
+    .scroll-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-content {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-button {
+  overflow-x: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  display:None
+}
+
+.scroll-button.left {
+  left: 10px;
+}
+
+.scroll-button.right {
+  right: 10px;
+}
+
+.no-bullets {
+    list-style: none;
+  }
+
+</style>
+<section class="products">
+    <a href="{% url 'base:add-product' %}"><h2>Add product </h2></a>
+    <h2>Featured Products</h2>
+    <div class="scroll-container">
+      <div class="scroll-content">
+          {% for product in products %}
+              <ul class="no-bullets">
+                  <li>
+                      <div class="product-item">
+                      <a href="{% url 'base:product' product.id %}" title="{{product.name}}">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg" alt="Product 1">
+                      <h3>{{product}}</h3>
+                      <p>${{product.price}}</p>
+                      </a>
+                      <a href="{% url 'base:add-cart' product.id %}" class="btn">Add to Cart</a>
+                      <!--<a href="#" class="btn">Go to Cart</a>-->
+                      </div>
+                  </li>
+              </ul>
+          {% endfor %}
+      </div>
+  <!--<button class="scroll-button left">&lt;</button>
+  <button class="scroll-button right">&gt;</button>-->
+  </div>
+
+  
+    
+    <div>
+        <b><h2>Category</h2></b>
+        {% for cat in category %}
+        {% if cat.product_set.all.count > 0 %}
+        <h5>{{cat.name}} - {{cat.product_set.all.count}} Products</h5>
+        <div class="scroll-container">
+            <div class="scroll-content">
+                {% for product in cat.product_set.all %}
+                    <ul class="no-bullets">
+                        <li>
+                            <div class="product-item">
+                            <a href="{% url 'base:product' product.id %}" title="{{product.name}}">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg" alt="Product 1">
+                            <h3>{{product}}</h3>
+                            <p>${{product.price}}</p>
+                            </a>
+                            <a href="{% url 'base:add-cart' product.id %}" class="btn">Add to Cart</a>
+                            <!--<a href="#" class="btn">Go to Cart</a>-->
+                            </div>
+                        </li>
+                    </ul>
+                
+                {% endfor %}
+            </div>
+        <!--<button class="scroll-button left">&lt;</button>
+        <button class="scroll-button right">&gt;</button> -->
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    
+    <script>
+      
+var scrollContainer = document.querySelector(".scroll-container");
+var scrollContent = document.querySelector(".scroll-content");
+var scrollButtons = document.querySelectorAll(".scroll-button");
+
+function toggleScrollButtons() {
+  var contentWidth = scrollContent.scrollWidth;
+  var containerWidth = scrollContainer.clientWidth;
+
+  if (contentWidth > containerWidth) {
+    // Display the buttons if content exceeds the container size
+    scrollButtons.forEach(function(button) {
+      button.style.display = "inline";
+    });
+  } else {
+    // Hide the buttons if content fits within the container
+    scrollButtons.forEach(function(button) {
+      button.style.display = "none";
+    });
+  }
+}
+
+// Call the function on window load and resize events
+window.addEventListener("load", toggleScrollButtons);
+window.addEventListener("resize", toggleScrollButtons);
+</script>
+
+<script>
+  document.querySelector(".scroll-button.left").addEventListener("click", function () {
+document.querySelector(".scroll-content").scrollBy({
+left: -200,
+behavior: "smooth"
+});
+});
+
+document.querySelector(".scroll-button.right").addEventListener("click", function () {
+document.querySelector(".scroll-content").scrollBy({
+left: 200,
+behavior: "smooth"
+});
+});
+
+
+</script>
+</section>
+
+<!--
+     {% for cat in category %}
+        <div><p>{{cat.id}}---{{cat.name}}-!-!-{{cat.products_set.all.count}}</p></div>
+        {% if cat.products_set.all.count > 0 %}
+        {% for product in cat.products_set.all %}
+        <li>{{ product.name }}</li>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+
+        <script>
+       document.querySelector(".scroll-button.left").addEventListener("click", function () {
+  document.querySelector(".scroll-content").scrollBy({
+    left: -200,
+    behavior: "smooth"
+  });
+});
+
+document.querySelector(".scroll-button.right").addEventListener("click", function () {
+  document.querySelector(".scroll-content").scrollBy({
+    left: 200,
+    behavior: "smooth"
+  });
+});
+
+
+    </script>
+-->
